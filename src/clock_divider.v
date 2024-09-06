@@ -14,7 +14,7 @@ module clock_divider (
         if (rst) begin
             counter <= 7'b0;
             dec_clk <= 1'b0;
-            dulay_curr<=7'b0;
+            delay_curr<=7'b0;
             delay_valid_prev<=1'b0;
         end else begin
           if(delay_valid && !delay_valid_prev) begin
