@@ -5,7 +5,7 @@
 
 `default_nettype none
 // This project was a collaboration between me(arghunter) and the other collaborators on this repository (Acknowledged in the ReadMe)
-module tt_um_supermic_arghunter (
+module tt_um_clock_divider_arghunter (
     input  wire [7:0] ui_in,    // Dedicated inputs
     output wire [7:0] uo_out,   // Dedicated outputs
     input  wire [7:0] uio_in,   // IOs: Input path
@@ -18,24 +18,20 @@ module tt_um_supermic_arghunter (
 wire rst;
   // All output pins must be assigned. If not used, assign to 0.
   // assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
-    assign uio_out[7:2] = 0;
-  assign uio_oe[4:0]  = 0;
-  assign uio_oe[6:5]  = 1;
-  assign uio_oe[7]  = 0;
+  assign uio_out[7:0] = 0;
+  assign uio_oe[7:0]  = 0;
   assign rst = !rst_n;
   generate
-    supermic_top_module u_supermic_top_module (
-        .clk(ui_in[0]),
-        .rst(rst),
-        .lr_clk(ui_in[1]),
-        .delay_select(uio_in[4:0]),
-        .pdm(ui_in[5:2]),
-        .i2s_out(uio_out[0]),
-        .mic_clk(uio_out[1]),
-        .cic_out(uo_out)
+    clock_divider u_clock_divider (
+        .clk(ui_in[0]),               // System clock
+        .rst(rst),               // Reset signal
+        .decimation_ratio(ui_in[7:1]), // 7-bit decimation ratio
+        .delay(uio_in[6:0]),
+        .delay_valid(uio_in[7]),
+        .dec_clk(uo_out[0])  
     );    
   endgenerate
   // List all unused inputs to prevent warnings
-  wire _unused = &{ena, clk,ui_in[7:6],uio_in[7], 1'b0};
+  wire _unused = &{ena, clk, 1'b0};
 
 endmodule
