@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Armaan Gomes and Friends
+ * Copyright (c) 2024 Armaan Gomes 
  * SPDX-License-Identifier: Apache-2.0
  */
 
