@@ -12,9 +12,10 @@ module clock_divider (
     reg delay_valid_prev;
     always @(posedge clk or posedge rst) begin
         if (rst) begin
-            counter <= 8'b0;
+            counter <= 7'b0;
             dec_clk <= 1'b0;
-            buffer <= 128'b0;
+            dulay_curr<=7'b0;
+            delay_valid_prev<=1'b0;
         end else begin
           if(delay_valid && !delay_valid_prev) begin
              delay_curr<=delay;
